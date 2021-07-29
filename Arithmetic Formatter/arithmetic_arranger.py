@@ -40,6 +40,7 @@ def generate_errors(problems):
 
 def arithmetic_arranger(problems, bool = False):
 
+    # Checking for errors
     if generate_errors(problems):
         return generate_errors(problems)
 
@@ -53,10 +54,21 @@ def arithmetic_arranger(problems, bool = False):
     for x in fullOp:
         y = max(len(x[0]), len(x[2]))
         maxSize.append(y + 2)
+        maxSize.append(0)
 
-        
+    maxSize.pop()
+    # ' '.join(sentence)
 
-    result = maxSize
+    third = []
+    i = 0
+    for x in maxSize:
+        if maxSize[i] == 0:
+            third.append("   ")
+        else:
+            third.append(maxSize[i] * "-")
+        i += 1
+
+    result = third
     return print(result)
 
 print(arithmetic_arranger(["32 + 698", "3801 - 2", "45 + 43", "123 + 49"]))
