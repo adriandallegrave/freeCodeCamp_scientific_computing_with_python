@@ -1,19 +1,7 @@
-'''
-If the user supplied the correct format of problems, the conversion you return will follow these rules:
-    There should be a single space between the operator and the longest of the two operands, the operator will be on the same line as the second operand, both operands will be in the same order as provided (the first will be the top one and the second will be the bottom.
-    Numbers should be right-aligned.
-    There should be four spaces between each problem.
-    There should be dashes at the bottom of each problem. The dashes should run along the entire length of each problem individually. (The example above shows what this should look like.)
-    
-    ["32 + 698", "3801 - 2", "45 + 43", "123 + 49"] , True
-
-    '''
-
-
 def generate_errors(problems):
-    # If there are too many problems supplied to the function. The limit is five, anything more will return: Error: Too many problems.
-    if len(problems) > 5:                       
-        return "Error: Too many problems."      
+    # More than 5 problems return: 'Error: Too many problems.'
+    if len(problems) > 5:
+        return "Error: Too many problems."
 
     fullOp = []
 
@@ -21,8 +9,8 @@ def generate_errors(problems):
         y = x.split()
         fullOp.append(y)
 
-    # # Testing if only + or - operations and if only numbers are passed as args
-    for x in fullOp:                            
+    # # Testing if only +- operations and if only numbers are passed as args
+    for x in fullOp:
         if not x[1] == "+" and not x[1] == "-":
             return "Error: Operator must be \'+\' or \'-\'."
         try:
@@ -30,15 +18,14 @@ def generate_errors(problems):
             x[2] = int(x[2])
         except:
             return "Error: Numbers must only contain digits."
-        
+
         if x[0] > 9999 or x[2] > 9999:
             return "Error: Numbers cannot be more than four digits."
 
     return False
 
 
-
-def arithmetic_arranger(problems, bool = False):
+def arithmetic_arranger(problems, bool=False):
 
     # Checking for errors
     if generate_errors(problems):
@@ -57,18 +44,45 @@ def arithmetic_arranger(problems, bool = False):
         maxSize.append(0)
 
     maxSize.pop()
-    # ' '.join(sentence)
 
+    first = []
+    second = []
     third = []
+    fourth = []
     i = 0
+    j = 0
+
     for x in maxSize:
         if maxSize[i] == 0:
-            third.append("   ")
+            first.append("    ")
+            second.append("    ")
+            third.append("    ")
+            fourth.append("    ")
         else:
+            first.append(" " * (maxSize[i] - len(fullOp[j][0])))
+            first.append(fullOp[j][0])
+            second.append(fullOp[j][1])
+            second.append(" ")
+            second.append(" " * (maxSize[i] - len(fullOp[j][2]) - 2))
+            second.append(fullOp[j][2])
             third.append(maxSize[i] * "-")
+            if fullOp[j][1] == "+":
+                ans = int(fullOp[j][0]) + int(fullOp[j][2])
+            else:
+                ans = int(fullOp[j][0]) - int(fullOp[j][2])
+            ans = str(ans)
+            fourth.append(" " * (maxSize[i] - len(ans)))
+            fourth.append(ans)
+            j += 1
         i += 1
 
-    result = third
-    return print(result)
+    first = "".join(first)
+    second = "".join(second)
+    third = "".join(third)
+    fourth = "".join(fourth)
 
-print(arithmetic_arranger(["32 + 698", "3801 - 2", "45 + 43", "123 + 49"]))
+    result = first + "\n" + second + "\n" + third
+    if bool:
+        result = result + "\n" + fourth
+
+    return result
