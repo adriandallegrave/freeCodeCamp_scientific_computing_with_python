@@ -1,3 +1,6 @@
+def create_spend_chart(categories):
+    return True
+
 class Category:
     
     def __init__(self, kind):
@@ -36,10 +39,10 @@ class Category:
     def transfer(self, amount, otherCat):
         if self.check_funds(amount):
             txt = "Transfer to {}"
-            txt = txt.format(otherCat)
+            txt = txt.format(otherCat.kind)
             self.withdraw(amount, txt)
             txt = "Transfer from {}"
-            txt = txt.format(self)
+            txt = txt.format(self.kind)
             otherCat.deposit(amount, txt)
             return True
         
@@ -51,7 +54,7 @@ class Category:
         for x in range(30):
             first.append("*")
         start = 30 - len(self.kind)
-        start = int(start/2)                     # maybe needs adjusting to odd length count of self.kind
+        start = int(start/2)
 
         for x in str(self.kind):
             first[start] = str(x)
@@ -94,15 +97,19 @@ class Category:
 
 '''
 x = Category("Adrian")
+z = Category("Dallegrave")
+
 x.deposit(40, "teste")
 x.withdraw(20, "saque")
+x.transfer(10, "Dallegrave")
+
 y = x
 
 print(y)
 '''
 
-def create_spend_chart(categories):
-    return True
+
+
 
 
 
