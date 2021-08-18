@@ -98,14 +98,12 @@ def create_spend_chart(categories):
 
     # calculating percentage spent by each category
     perc = []
-    total = 0
 
     for x in categories:
         sum = 0
         for y in x.ledger:
             if y["amount"] < 0:
                 sum += y["amount"]
-                total += sum
         sum *= -1
         perc.append(sum)
 
